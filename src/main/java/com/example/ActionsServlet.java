@@ -37,8 +37,8 @@ import org.slf4j.LoggerFactory;
  */
 @WebServlet(name = "actions", value = "/")
 public class ActionsServlet extends HttpServlet {
-  private static final Logger LOG = LoggerFactory.getLogger(MyActionsApp.class);
-  private final App actionsApp = new MyActionsApp();
+  private static final Logger LOG = LoggerFactory.getLogger(ShirtPickerApp.class);
+  private final App actionsApp = new ShirtPickerApp();
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {

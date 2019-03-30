@@ -39,7 +39,7 @@ public class MyActionsAppTest {
 
   @Test
   public void testWelcomeUsingRawRequest() throws Exception {
-    MyActionsApp app = new MyActionsApp();
+    ShirtPickerApp app = new ShirtPickerApp();
     String requestBody = fromFile("request_welcome.json");
     String expectedResponse = fromFile("response_welcome.json");
 
@@ -51,7 +51,7 @@ public class MyActionsAppTest {
 
   @Test
   public void testWelcomeUsingMockRequestBuilder() {
-    MyActionsApp app = new MyActionsApp();
+    ShirtPickerApp app = new ShirtPickerApp();
     MockRequestBuilder rb = MockRequestBuilder.PreBuilt.welcome("welcome", true);
     ActionRequest request = rb.build();
 
@@ -62,7 +62,7 @@ public class MyActionsAppTest {
 
   @Test
   public void testBye() {
-    MyActionsApp app = new MyActionsApp();
+    ShirtPickerApp app = new ShirtPickerApp();
     MockRequestBuilder rb = new MockRequestBuilder();
     rb.setIntent("bye");
     rb.setUsesDialogflow(true);

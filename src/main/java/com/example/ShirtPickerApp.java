@@ -23,7 +23,7 @@ import com.google.actions.api.ForIntent;
 import com.google.actions.api.response.ResponseBuilder;
 import com.google.api.services.actions_fulfillment.v2.model.User;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +31,9 @@ import org.slf4j.LoggerFactory;
  * Implements all intent handlers for this Action. Note that your App must extend from DialogflowApp
  * if using Dialogflow or ActionsSdkApp for ActionsSDK based Actions.
  */
-public class MyActionsApp extends DialogflowApp {
+public class ShirtPickerApp extends DialogflowApp {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MyActionsApp.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ShirtPickerApp.class);
 
   @ForIntent("Default Welcome Intent")
   public ActionResponse welcome(ActionRequest request) {
