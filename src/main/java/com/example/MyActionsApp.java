@@ -57,7 +57,7 @@ public class MyActionsApp extends DialogflowApp {
     LOGGER.info("Shirt pick intent start.");
     ResponseBuilder responseBuilder = getResponseBuilder(request);
     ResourceBundle rb = ResourceBundle.getBundle("resources");
-    responseBuilder.add(rb.getString("shirt"));
+    responseBuilder.add(rb.getString("green_shirt"));
 
     LOGGER.info("Shirt pick intent end.");
     return responseBuilder.build();
