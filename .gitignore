@@ -1,8 +1,0 @@
-# Created by .ignore support plugin (hsz.mobi)
-.gradle/4.10.3/vcsMetadata-1/
-build/.gitignore
-build/classes/kotlin/
-build/tmp/compileJava/
-.gitignore
-classes/kotlin/
-tmp/compileJava/
