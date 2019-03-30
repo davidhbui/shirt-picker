@@ -52,6 +52,17 @@ public class MyActionsApp extends DialogflowApp {
     return responseBuilder.build();
   }
 
+  @ForIntent("what shirt")
+  public ActionResponse what_shirt(ActionRequest request) {
+    LOGGER.info("Shirt pick intent start.");
+    ResponseBuilder responseBuilder = getResponseBuilder(request);
+    ResourceBundle rb = ResourceBundle.getBundle("resources");
+    responseBuilder.add(rb.getString("shirt"));
+
+    LOGGER.info("Shirt pick intent end.");
+    return responseBuilder.build();
+  }
+
   @ForIntent("bye")
   public ActionResponse bye(ActionRequest request) {
     LOGGER.info("Bye intent start.");
