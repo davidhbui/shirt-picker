@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.example.SheetReader;
+
 /**
  * Implements all intent handlers for this Action. Note that your App must extend from DialogflowApp
  * if using Dialogflow or ActionsSdkApp for ActionsSDK based Actions.
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 public class ShirtPickerApp extends DialogflowApp {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ShirtPickerApp.class);
+  private static SheetReader SHEETREADER;
 
   @ForIntent("Default Welcome Intent")
   public ActionResponse welcome(ActionRequest request) {
@@ -42,11 +45,19 @@ public class ShirtPickerApp extends DialogflowApp {
     ResourceBundle rb = ResourceBundle.getBundle("resources");
     User user = request.getUser();
 
+    /*
     if (user != null && user.getLastSeen() != null) {
       responseBuilder.add(rb.getString("welcome_back"));
     } else {
       responseBuilder.add(rb.getString("welcome"));
     }
+    */
+
+    // Initialize the sheet reader
+    SHEETREADER = new SheetReader();
+    String status = SHEETREADER.setUpService();
+    responseBuilder.add(status);
+
 
     LOGGER.info("Welcome intent end.");
     return responseBuilder.build();
@@ -56,8 +67,12 @@ public class ShirtPickerApp extends DialogflowApp {
   public ActionResponse what_shirt(ActionRequest request) {
     LOGGER.info("Shirt pick intent start.");
     ResponseBuilder responseBuilder = getResponseBuilder(request);
+
     ResourceBundle rb = ResourceBundle.getBundle("resources");
-    responseBuilder.add(rb.getString("green_shirt"));
+
+    String shirtName = SHEETREADER.getShirts(1)[0];
+
+    responseBuilder.add(shirtName);
 
     LOGGER.info("Shirt pick intent end.");
     return responseBuilder.build();

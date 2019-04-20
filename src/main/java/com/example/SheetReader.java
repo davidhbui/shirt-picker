@@ -23,15 +23,22 @@ import java.util.List;
 
 public class SheetReader {
 
-    private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
+    private static final String APPLICATION_NAME = "Shirt Picker";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
+
+    private Sheets service;
+    private final String spreadsheetId = "1XqK9-kRh5HUIs8VYEicJtUolIPMhITVDULjsWdG_-TE";
+    private final String range = "Shirts!H2:J";
+
+    SheetReader(){
+    }
 
     /**
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS);
+    private static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
@@ -55,31 +62,78 @@ public class SheetReader {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    /**
-     * Prints the names and majors of students in a sample spreadsheet:
-     * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-     */
-    public static void main(String... args) throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
-        final String range = "Class Data!A2:E";
-        Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-        ValueRange response = service.spreadsheets().values()
-                .get(spreadsheetId, range)
-                .execute();
-        List<List<Object>> values = response.getValues();
-        if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
+    String[] getShirts(int choices) {
+
+        String [] shirtChoices = new String[choices];
+        ValueRange response;
+        List<List<Object>> values;
+        int counter = 0;
+
+        if (this.service != null) {
+            shirtChoices[0] = "hi from new computer. we have some liftoff";
         } else {
-            System.out.println("Name, Major");
-            for (List row : values) {
-                // Print columns A and E, which correspond to indices 0 and 4.
-                System.out.printf("%s, %s\n", row.get(0), row.get(4));
-            }
+            shirtChoices[0] = "hi from new computer. couldn't even start the service.";
         }
+        return shirtChoices;
+        /*
+        try {
+            response = this.service.spreadsheets().values()
+                    .get(spreadsheetId, range)
+                    .execute();
+            shirtChoices[0] = "tried again";
+            return shirtChoices;
+
+        } catch (IOException e) {
+                shirtChoices[0] = "Unsuccessful get";
+                return shirtChoices;
+        }
+
+
+        values = response.getValues();
+        if (values == null || values.isEmpty()) {
+            shirtChoices[0] = "No data found.";
+            return shirtChoices;
+        } else {
+
+            shirtChoices[0] = "ahhhhh";
+            return shirtChoices;
+            // For row
+            for (List row : values) {
+
+                if (counter <= choices) {
+
+                    // Print columns A and E, which correspond to indices 0 and 4.
+                    String shirtName = row.get(0).toString();
+                    shirtChoices[counter] = shirtName;
+
+                    shirtChoices[0] = "blah";
+
+                    counter++;
+
+                } else {
+                    break;
+                }
+            }
+
+        }
+
+        return shirtChoices;
+    */
     }
 
+    String setUpService() {
+        // Build a new authorized API client service.
+        try {
+            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            this.service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
+            return "service setup correctly";
+        }
+        catch (IOException e) {
+            return "IOException";
+        } catch (GeneralSecurityException e) {
+            return "no dice, security exception";
+        }
+    }
 }
